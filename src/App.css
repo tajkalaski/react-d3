@@ -1,0 +1,15 @@
+body {
+  text-align: center;
+}
+
+svg {
+  background: #1D1531;
+  color: #f8f8f8;
+  width: 600px;
+  height: 300px;
+  overflow: visible;
+}
+
+.tooltip {
+  color: #1D1531
+}
