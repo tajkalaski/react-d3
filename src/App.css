@@ -2,14 +2,31 @@ body {
   text-align: center;
 }
 
+h2 {
+  padding: 0px 0px 15px 15px;
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: -0.5px;
+  text-align: left;
+  border-bottom: 1px solid #eceded;
+}
+.chart,
+.chart-data {
+  width: 700px;
+  background: white;
+  margin: 0 auto;
+  border-radius: 5px;
+  border: 1px solid #eceded;
+}
+
 svg {
-  background: #1D1531;
-  color: #f8f8f8;
+  color: #b9baba;
   width: 600px;
   height: 300px;
   overflow: visible;
+  padding: 50px;
 }
 
 .tooltip {
-  color: #1D1531
+  color: #1d1531;
 }
