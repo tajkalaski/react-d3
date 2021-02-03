@@ -9,6 +9,10 @@ const Button = styled.li`
 
   &.active {
     border: 2px solid ${({ theme, color }) => theme[color].dark};
+    background-image: url(${({ icon }) => icon});
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: 40%;
   }
 `;
 
