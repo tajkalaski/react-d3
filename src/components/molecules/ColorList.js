@@ -1,36 +1,48 @@
 import React from "react";
+import styled from "styled-components";
+import { theme } from "./../../theme/theme";
+import checkedIcon from "./../../assets/tick.svg";
+import ColorListItem from "./../atoms/ColorListItem";
 
-const ColorList = () => (
-  <ul class="colors">
+const StyledList = styled.ul`
+  margin: 0px;
+  padding: 0px;
+  display: flex;
+`;
+
+const ColorList = ({ color, setColor }) => (
+  <StyledList>
     <ColorListItem
       color="blue"
       icon={checkedIcon}
-      onClick={(e) => handleColorChange(e, "blue")}
+      onClick={() => setColor(theme.blue.normal)}
       className={color === theme.blue.normal ? "active" : ""}
     ></ColorListItem>
     <ColorListItem
       color="orange"
       icon={checkedIcon}
-      onClick={(e) => handleColorChange(e, "orange")}
+      onClick={() => setColor(theme.orange.normal)}
       className={color === theme.orange.normal ? "active" : ""}
     ></ColorListItem>
     <ColorListItem
       color="red"
       icon={checkedIcon}
-      onClick={(e) => handleColorChange(e, "red")}
+      onClick={() => setColor(theme.red.normal)}
       className={color === theme.red.normal ? "active" : ""}
     ></ColorListItem>
     <ColorListItem
       color="green"
       icon={checkedIcon}
-      onClick={(e) => handleColorChange(e, "green")}
+      onClick={() => setColor(theme.green.normal)}
       className={color === theme.green.normal ? "active" : ""}
     ></ColorListItem>
     <ColorListItem
       color="grey"
       icon={checkedIcon}
-      onClick={(e) => handleColorChange(e, "grey")}
+      onClick={() => setColor(theme.grey.normal)}
       className={color === theme.grey.normal ? "active" : ""}
     ></ColorListItem>
-  </ul>
+  </StyledList>
 );
+
+export default ColorList;

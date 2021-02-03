@@ -1,8 +1,12 @@
+import React from "react";
 import styled from "styled-components";
 
-const Paragraph = styled.p`
+const Label = styled.label`
+  color: #a9a9a9;
   font-size: ${({ theme }) => theme.fontSize.xs};
   font-weight: ${({ theme }) => theme.medium};
+  margin-bottom: 4px;
+  display: inline-block;
 `;
 
-export default Paragraph;
+export default Label;

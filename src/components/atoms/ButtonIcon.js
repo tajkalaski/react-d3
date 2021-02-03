@@ -12,7 +12,9 @@ const ButtonIcon = styled.button`
   background-size: 40%;
 
   &.active {
-    background-color: white;
+    /* background-color: #c73131; */
+    background-color: #ffffff;
+    box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.1);
   }
 `;
 

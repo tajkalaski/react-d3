@@ -1,15 +1,15 @@
 import styled from "styled-components";
 
 const Button = styled.button`
-  width: 30%;
-  font-size: ${({ theme }) => theme.fontSize.xs};
+  font-size: ${({ theme }) => theme.fontSize.s};
   font-weight: ${({ theme }) => theme.bold};
-  padding: 8px 16px;
-  border: 1px dashed #d4d4d4;
-  color: #d4d4d4;
-  margin-top: 8px;
-  background: none;
-  border-radius: 3px;
+  font-family: "Montserrat", sans-serif;
+  padding: 12px 24px;
+  color: #fff;
+  margin: 24px auto 0px auto;
+  background: #c73131;
+  border: none;
+  border-radius: 4px;
 `;
 
 export default Button;
