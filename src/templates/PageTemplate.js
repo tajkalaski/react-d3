@@ -11,11 +11,11 @@ const PageTemplate = ({ children, chartType }) => (
 
 PageTemplate.propTypes = {
   children: PropTypes.element.isRequired,
-  chartType: PropTypes.oneOf(["singleline", "bar", "multiline"]),
+  chartType: PropTypes.oneOf(["line", "bar"]),
 };
 
 PageTemplate.defaultProps = {
-  chartType: "singleline",
+  chartType: "line",
 };
 
 export default PageTemplate;

@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import Heading from "./../atoms/Heading";
 import Button from "./../atoms/Button";
+import ButtonIcon from "./../atoms/ButtonIcon";
 import DataInput from "./../atoms/DataInput";
 import ColorList from "./../molecules/ColorList";
 import Label from "./../atoms/Label";
 import styled, { css } from "styled-components";
+import DataForm from "./../molecules/DataForm";
+import trashIcon from "./../../assets/trash-outline.svg";
 
 const StyledHeading = styled(Heading)`
   letter-spacing: -0.5px;
@@ -22,10 +25,12 @@ const StyledWrapper = styled.div`
 `;
 
 const StyledInputWrapper = styled.div`
+  display: block;
+
   ${({ wide }) =>
     wide &&
     css`
-      width: 75%;
+      width: 65%;
     `}
 `;
 
@@ -34,6 +39,8 @@ const StyledFormWrapper = styled.div`
   width: 100%;
   justify-content: space-between;
   align-items: flex-start;
+  flex-direction: column;
+  border-bottom: 1px solid #eceded;
 `;
 
 const StyledInput = styled(DataInput)`
@@ -47,27 +54,79 @@ const StyledForm = styled.form`
   align-items: flex-start;
 `;
 
-const ChartData = ({ onSubmit, color, setColor }) => (
-  <StyledWrapper>
-    <StyledHeading>Chart Data</StyledHeading>
-    <StyledForm onSubmit={onSubmit}>
-      <StyledFormWrapper>
-        <StyledInputWrapper wide>
-          <Label>Values</Label>
-          <StyledInput
-            placeholder="ex. 1, 2, 3, 4"
-            type="text"
-            name="data"
-          ></StyledInput>
-        </StyledInputWrapper>
-        <StyledInputWrapper>
-          <Label>Chart Color</Label>
-          <ColorList color={color} setColor={setColor} />
-        </StyledInputWrapper>
-      </StyledFormWrapper>
-      <Button tyle="submit">Update chart</Button>
-    </StyledForm>
-  </StyledWrapper>
-);
+const StyledFromInputsWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  padding-bottom: 24px;
+  align-items: flex-end;
+  justify-content: space-between;
+`;
+
+const StyledLink = styled.a`
+  cursor: pointer;
+  padding-bottom: 24px;
+`;
+
+const ChartData = ({ data, onSubmit, color, setColor }) => {
+  const [chartsData, setChartsData] = useState(data);
+
+  console.log("chartsData", chartsData);
+
+  const addNewChart = () => {
+    setChartsData([...chartsData, []]);
+  };
+
+  const updateColors = (color, i) => {
+    setColor(color, i);
+  };
+
+  const updateChartData = (e, i) => {
+    let updatedChartsData = [...chartsData];
+    updatedChartsData[i] = e.target.value.split(",").map(Number);
+    setChartsData(updatedChartsData);
+  };
+
+  const deleteLine = (i) => {
+    let updatedChartsData = [...chartsData];
+    updatedChartsData.splice(i, 1);
+    console.log(updatedChartsData);
+    setChartsData(updatedChartsData);
+  };
+
+  return (
+    <StyledWrapper>
+      <StyledHeading>Chart Data</StyledHeading>
+      <StyledForm onSubmit={(e) => onSubmit(e, chartsData)}>
+        <StyledFormWrapper>
+          {chartsData.map((chart, i) => {
+            return (
+              <StyledFromInputsWrapper>
+                <StyledInputWrapper wide key={i}>
+                  <Label>Line #{i + 1}</Label>
+                  <StyledInput
+                    defaultValue={chart}
+                    placeholder="ex. 1, 2, 3, 4"
+                    type="text"
+                    name="data"
+                    onChange={(e) => updateChartData(e, i)}
+                  ></StyledInput>
+                </StyledInputWrapper>
+                <StyledInputWrapper>
+                  <Label>Line #{i + 1} Color</Label>
+                  <ColorList color={color} setColor={setColor} itemNr={i} />
+                </StyledInputWrapper>
+                <ButtonIcon secondary icon={trashIcon} onClick={deleteLine} />
+                <br />
+              </StyledFromInputsWrapper>
+            );
+          })}
+
+          <StyledLink onClick={addNewChart}>+ Add line</StyledLink>
+        </StyledFormWrapper>
+        <Button type="submit">Update preview</Button>
+      </StyledForm>
+    </StyledWrapper>
+  );
+};
 
 export default ChartData;

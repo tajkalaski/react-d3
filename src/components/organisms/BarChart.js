@@ -28,19 +28,36 @@ const StyleSVG = styled.svg`
   box-sizing: content-box;
 `;
 
-const BarChart = ({ data, color }) => {
+const BarChart = ({ data, colors }) => {
+  console.log(data);
   const svgRef = useRef();
 
   useEffect(() => {
     const svg = d3.select(svgRef.current);
 
-    const xScale = d3
-      .scaleBand()
-      .domain(data.map((value, index) => index))
-      .range([0, 800])
-      .padding(0.5); // 0px to 300px
+    d3.select("svg").selectAll("*").remove();
 
-    const yMax = Math.max(...data);
+    let yMax = 0;
+    let xMax = [];
+    let xTicks = 0;
+    const setNr = data.length;
+
+    data.map((dataSet) => {
+      const tempY = Math.max(...dataSet);
+      const tempXTicks = dataSet.length - 1;
+
+      const tempX = dataSet.map((n, i) => {
+        return i;
+      });
+
+      tempX.length > xMax.length ? (xMax = tempX) : (xMax = xMax);
+
+      tempY > yMax ? (yMax = tempY) : (yMax = yMax);
+      tempXTicks > xTicks ? (xTicks = tempXTicks) : (xTicks = xTicks);
+    });
+
+    const xScale = d3.scaleBand().domain(xMax).range([0, 800]).padding(0.5); // 0px to 300px
+
     const yScale = d3
       .scaleLinear()
       .domain([0, yMax + 5])
@@ -48,49 +65,55 @@ const BarChart = ({ data, color }) => {
 
     const xAxis = d3
       .axisBottom(xScale)
-      .ticks(data.length)
+      .ticks(xTicks)
       .tickSize(0)
       .tickPadding(15);
 
-    svg.select(".x-axis").style("transform", "translateY(450px)").call(xAxis);
+    svg
+      .append("g")
+      .attr("class", "x axis")
+      .style("transform", "translateY(450px)")
+      .call(xAxis);
 
     const yAxis = d3
       .axisLeft(yScale)
-      .ticks(data.length + 1)
+      .ticks(xTicks + 1)
       .tickSize(0)
       .tickPadding(15);
 
-    svg.select(".y-axis").call(yAxis);
+    svg.append("g").attr("class", "y axis").call(yAxis);
 
-    const recs = svg
-      .selectAll(".bar")
-      .data(data)
-      .join("rect")
-      .attr("class", "bar")
-      .attr("x", (value, index) => {
-        return xScale(index);
-      })
-      .attr("y", (value) => {
-        return yScale(0);
-      })
-      .attr("height", (d) => {
-        return yScale(0) - yScale(0);
-      })
-      .attr("width", xScale.bandwidth())
-      .attr("fill", color)
-      .transition()
-      .duration(800)
-      .attr("y", function (value) {
-        return yScale(value);
-      })
-      .attr("height", function (d) {
-        return yScale(0) - yScale(d);
-      })
-      .delay(function (d, i) {
-        console.log(i);
-        return i * 100;
-      });
-  }, [data]);
+    data.forEach((dataSet, i) => {
+      const recs = svg
+        .selectAll(".bar")
+        .data(dataSet)
+        .join("rect")
+        .attr("class", `bar${i}`)
+        .attr("x", (value, index) => {
+          return xScale(index) + (xScale.bandwidth() / setNr) * i;
+        })
+        .attr("y", (value) => {
+          return yScale(0);
+        })
+        .attr("height", (d) => {
+          return yScale(0) - yScale(0);
+        })
+        .attr("width", xScale.bandwidth() / setNr)
+        .attr("fill", colors[i])
+        .transition()
+        .duration(800)
+        .attr("y", function (value) {
+          return yScale(value);
+        })
+        .attr("height", function (d) {
+          return yScale(0) - yScale(d);
+        })
+        .delay(function (d, i) {
+          console.log(i);
+          return i * 100;
+        });
+    });
+  }, [data, colors]);
   return (
     <>
       <StyledWrapper>

@@ -35,7 +35,7 @@ const Sidebar = ({ chartType }) => (
       <li>
         <ButtonIcon
           as={NavLink}
-          to="/single-line-chart"
+          to="/line-chart"
           icon={singleLineIcon}
           activeClassName="active"
         />
@@ -48,24 +48,16 @@ const Sidebar = ({ chartType }) => (
           activeClassName="active"
         />
       </li>
-      <li>
-        <ButtonIcon
-          as={NavLink}
-          to="/multiple-line-chart"
-          icon={multiLineIcon}
-          activeClassName="active"
-        />
-      </li>
     </StyledLinksList>
   </StyledWrapper>
 );
 
 Sidebar.propTypes = {
-  pageType: PropTypes.oneOf(["singleline", "bar", "multiline"]),
+  pageType: PropTypes.oneOf(["line", "bar"]),
 };
 
 Sidebar.defaultProps = {
-  pageType: "singleline",
+  pageType: "line",
 };
 
 export default Sidebar;

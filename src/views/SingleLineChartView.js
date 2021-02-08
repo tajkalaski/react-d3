@@ -1,9 +1,9 @@
 import React, { useState } from "react";
+import SingleLineChart from "../components/organisms/SingleLineChart";
 import LayoutTemplate from "../templates/LayoutTemplate";
-import BarChart from "./../components/organisms/BarChart";
-import ChartData from "./../components/organisms/ChartData";
+import ChartData from "../components/organisms/ChartData";
 
-const BarChartView = () => {
+const SingleLineChartView = () => {
   const array = [12, 20, 21, 28, 36, 26, 47];
 
   const [data, setData] = useState(array);
@@ -17,11 +17,11 @@ const BarChartView = () => {
   };
 
   return (
-    <LayoutTemplate chartType="bar">
-      <ChartData onSubmit={updateData} color={color} setColor={setColor} />
-      <BarChart data={data} color={color} />
+    <LayoutTemplate chartType="singleline">
+      {/* <ChartData onSubmit={updateData} color={color} setColor={setColor} /> */}
+      <SingleLineChart data={data} color={color}></SingleLineChart>
     </LayoutTemplate>
   );
 };
 
-export default BarChartView;
+export default SingleLineChartView;

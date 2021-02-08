@@ -13,7 +13,7 @@ const Heading = styled.h1`
     big &&
     css`
       padding: 48px 32px 32px 32px;
-    `}/* */
+    `}
 `;
 
 export default Heading;

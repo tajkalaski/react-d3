@@ -18,11 +18,11 @@ const LayoutTemplate = ({ children, chartType }) => (
 
 LayoutTemplate.propTypes = {
   children: PropTypes.element.isRequired,
-  chartType: PropTypes.oneOf(["singleline", "bar", "multiline"]),
+  chartType: PropTypes.oneOf(["bar", "line"]),
 };
 
 LayoutTemplate.defaultProps = {
-  chartType: "singleline",
+  chartType: "line",
 };
 
 export default LayoutTemplate;
