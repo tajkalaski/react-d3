@@ -11,14 +11,12 @@ const BarChartView = () => {
 
   const [data, setData] = useState(array);
   // const [newData, setNewData] = useState([]);
-  const [colors, setColors] = useState(["purple", "blue"]);
+  const [colors, setColors] = useState([
+    "hsl(206, 64%, 63%)",
+    "hsl(24, 100%, 67%)",
+  ]);
   const updateData = (evt, newData) => {
     evt.preventDefault();
-    console.log("actual data hook passed to the chart", newData);
-    // console.log(evt.currentTarget.data.value);
-    // const inputData = evt.currentTarget.data.value;
-    // let updatedData = inputData.split(",").map(Number);
-    // console.log(updatedData);
     setData(newData);
   };
 
@@ -31,6 +29,7 @@ const BarChartView = () => {
   return (
     <LayoutTemplate chartType="bar">
       <ChartData
+        chartType="bar"
         onSubmit={updateData}
         data={data}
         color={colors}

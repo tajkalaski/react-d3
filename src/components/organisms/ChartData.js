@@ -6,7 +6,6 @@ import DataInput from "./../atoms/DataInput";
 import ColorList from "./../molecules/ColorList";
 import Label from "./../atoms/Label";
 import styled, { css } from "styled-components";
-import DataForm from "./../molecules/DataForm";
 import trashIcon from "./../../assets/trash-outline.svg";
 
 const StyledHeading = styled(Heading)`
@@ -67,17 +66,17 @@ const StyledLink = styled.a`
   padding-bottom: 24px;
 `;
 
-const ChartData = ({ data, onSubmit, color, setColor }) => {
-  const [chartsData, setChartsData] = useState(data);
+const StyledParagraph = styled.p`
+  padding-bottom: 24px;
+  margin: 0;
+  color: #c73131;
+`;
 
-  console.log("chartsData", chartsData);
+const ChartData = ({ data, onSubmit, color, setColor, chartType }) => {
+  const [chartsData, setChartsData] = useState(data);
 
   const addNewChart = () => {
     setChartsData([...chartsData, []]);
-  };
-
-  const updateColors = (color, i) => {
-    setColor(color, i);
   };
 
   const updateChartData = (e, i) => {
@@ -89,7 +88,6 @@ const ChartData = ({ data, onSubmit, color, setColor }) => {
   const deleteLine = (i) => {
     let updatedChartsData = [...chartsData];
     updatedChartsData.splice(i, 1);
-    console.log(updatedChartsData);
     setChartsData(updatedChartsData);
   };
 
@@ -115,13 +113,23 @@ const ChartData = ({ data, onSubmit, color, setColor }) => {
                   <Label>Line #{i + 1} Color</Label>
                   <ColorList color={color} setColor={setColor} itemNr={i} />
                 </StyledInputWrapper>
-                <ButtonIcon secondary icon={trashIcon} onClick={deleteLine} />
+                <ButtonIcon
+                  disabled={chartsData.length === 1}
+                  secondary
+                  icon={trashIcon}
+                  onClick={deleteLine}
+                />
                 <br />
               </StyledFromInputsWrapper>
             );
           })}
-
-          <StyledLink onClick={addNewChart}>+ Add line</StyledLink>
+          {chartsData.length === 5 ? (
+            <StyledParagraph>
+              You can only have 5 arrays of values
+            </StyledParagraph>
+          ) : (
+            <StyledLink onClick={addNewChart}>+ Add line</StyledLink>
+          )}
         </StyledFormWrapper>
         <Button type="submit">Update preview</Button>
       </StyledForm>

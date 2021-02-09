@@ -31,8 +31,6 @@ const StyleSVG = styled.svg`
 
 const LineChart = ({ data, colors }) => {
   const svgRef = useRef();
-  console.log(data);
-  console.log(colors);
 
   useEffect(() => {
     const svg = d3.select(svgRef.current);
@@ -49,14 +47,11 @@ const LineChart = ({ data, colors }) => {
       tempXTicks > xTicks ? (xTicks = tempXTicks) : (xTicks = xTicks);
     });
 
-    const xScale = d3.scaleLinear().domain([0, xTicks]).range([0, 800]); // 0px to 300px
-
+    const xScale = d3.scaleLinear().domain([0, xTicks]).range([0, 800]);
     const yScale = d3
       .scaleLinear()
       .domain([0, yMax + 5])
       .range([450, 0]);
-
-    console.log(xScale);
 
     const xAxis = d3
       .axisBottom(xScale)
@@ -87,7 +82,6 @@ const LineChart = ({ data, colors }) => {
       .curve(curveCardinal);
 
     data.map((dataSet, index) => {
-      console.log(dataSet);
       const linePath = svg
         .selectAll(".line")
         .data([dataSet])

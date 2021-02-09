@@ -1,5 +1,5 @@
 import React from "react";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect } from "react";
 import styled from "styled-components";
 import Heading from "./../atoms/Heading";
 import * as d3 from "d3";
@@ -29,7 +29,6 @@ const StyleSVG = styled.svg`
 `;
 
 const BarChart = ({ data, colors }) => {
-  console.log(data);
   const svgRef = useRef();
 
   useEffect(() => {
@@ -92,14 +91,22 @@ const BarChart = ({ data, colors }) => {
         .attr("x", (value, index) => {
           return xScale(index) + (xScale.bandwidth() / setNr) * i;
         })
-        .attr("y", (value) => {
-          return yScale(0);
-        })
+        .attr("y", yScale(0))
         .attr("height", (d) => {
           return yScale(0) - yScale(0);
         })
         .attr("width", xScale.bandwidth() / setNr)
         .attr("fill", colors[i])
+        .on("mouseover", (event, d) => {
+          tooltip.transition().duration(200).style("opacity", 0.9);
+          tooltip
+            .text(`Value: ${d}`)
+            .style("left", event.pageX + "px")
+            .style("top", event.pageY + "px");
+        })
+        .on("mouseout", (d) => {
+          tooltip.transition().duration(500).style("opacity", 0);
+        })
         .transition()
         .duration(800)
         .attr("y", function (value) {
@@ -109,9 +116,20 @@ const BarChart = ({ data, colors }) => {
           return yScale(0) - yScale(d);
         })
         .delay(function (d, i) {
-          console.log(i);
           return i * 100;
         });
+
+      const tooltip = d3
+        .select("body")
+        .append("div")
+        .attr("class", "tooltip")
+        .style("position", "absolute")
+        .style("opacity", 0)
+        .style("background-color", "rgb(248, 248, 248, .75)")
+        .style("padding", "10px")
+        .style("border-radius", "5px")
+        .style("color", "#1D1531")
+        .style("font-size", "11px");
     });
   }, [data, colors]);
   return (

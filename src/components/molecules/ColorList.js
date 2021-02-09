@@ -11,8 +11,6 @@ const StyledList = styled.ul`
 `;
 
 const ColorList = ({ color, setColor, itemNr }) => {
-  console.log(color[itemNr]);
-  console.log(itemNr);
   return (
     <StyledList>
       <ColorListItem
