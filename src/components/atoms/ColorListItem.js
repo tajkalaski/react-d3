@@ -7,6 +7,7 @@ const Button = styled.li`
   width: 37px;
   height: 37px;
   margin: 0px 2px;
+  cursor: pointer;
 
   &.active {
     background-image: url(${({ icon }) => icon});

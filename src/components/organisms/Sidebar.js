@@ -1,10 +1,10 @@
-import ButtonIcon from "./../atoms/ButtonIcon";
 import React from "react";
+import ButtonIcon from "./../atoms/ButtonIcon";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import singleLineIcon from "./../../assets/singleline.svg";
 import barIcon from "./../../assets/bars.svg";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 const StyledWrapper = styled.nav`
   position: fixed;
@@ -27,28 +27,32 @@ const StyledLinksList = styled.ul`
   list-style: none;
 `;
 
-const Sidebar = ({ chartType }) => (
-  <StyledWrapper activeChart={chartType}>
-    <StyledLinksList>
-      <li>
-        <ButtonIcon
-          as={NavLink}
-          to="/line-chart"
-          icon={singleLineIcon}
-          activeClassName="active"
-        />
-      </li>
-      <li>
-        <ButtonIcon
-          as={NavLink}
-          to="/bar-chart"
-          icon={barIcon}
-          activeClassName="active"
-        />
-      </li>
-    </StyledLinksList>
-  </StyledWrapper>
-);
+const Sidebar = ({ chartType }) => {
+  const { pathname } = useLocation();
+  return (
+    <StyledWrapper activeChart={chartType}>
+      <StyledLinksList>
+        <li>
+          <ButtonIcon
+            as={NavLink}
+            to="/line-chart"
+            icon={singleLineIcon}
+            isActive={() => ["/line-chart", "/"].includes(pathname)}
+            activeClassName="active"
+          />
+        </li>
+        <li>
+          <ButtonIcon
+            as={NavLink}
+            to="/bar-chart"
+            icon={barIcon}
+            activeClassName="active"
+          />
+        </li>
+      </StyledLinksList>
+    </StyledWrapper>
+  );
+};
 
 Sidebar.propTypes = {
   pageType: PropTypes.oneOf(["line", "bar"]),

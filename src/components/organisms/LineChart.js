@@ -1,5 +1,5 @@
 import React from "react";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect } from "react";
 import styled from "styled-components";
 import Heading from "../atoms/Heading";
 import * as d3 from "d3";
@@ -39,12 +39,12 @@ const LineChart = ({ data, colors }) => {
     let yMax = 0;
     let xTicks = 0;
 
-    data.map((dataSet) => {
+    data.forEach((dataSet) => {
       const tempY = Math.max(...dataSet);
       const tempXTicks = dataSet.length - 1;
 
-      tempY > yMax ? (yMax = tempY) : (yMax = yMax);
-      tempXTicks > xTicks ? (xTicks = tempXTicks) : (xTicks = xTicks);
+      if (tempY > yMax) yMax = tempY;
+      if (tempXTicks > xTicks) xTicks = tempXTicks;
     });
 
     const xScale = d3.scaleLinear().domain([0, xTicks]).range([0, 800]);
@@ -81,7 +81,7 @@ const LineChart = ({ data, colors }) => {
       .y(yScale)
       .curve(curveCardinal);
 
-    data.map((dataSet, index) => {
+    data.forEach((dataSet, index) => {
       const linePath = svg
         .selectAll(".line")
         .data([dataSet])

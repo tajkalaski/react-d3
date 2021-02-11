@@ -41,7 +41,7 @@ const BarChart = ({ data, colors }) => {
     let xTicks = 0;
     const setNr = data.length;
 
-    data.map((dataSet) => {
+    data.forEach((dataSet) => {
       const tempY = Math.max(...dataSet);
       const tempXTicks = dataSet.length - 1;
 
@@ -49,10 +49,9 @@ const BarChart = ({ data, colors }) => {
         return i;
       });
 
-      tempX.length > xMax.length ? (xMax = tempX) : (xMax = xMax);
-
-      tempY > yMax ? (yMax = tempY) : (yMax = yMax);
-      tempXTicks > xTicks ? (xTicks = tempXTicks) : (xTicks = xTicks);
+      if (tempX.length > xMax.length) xMax = tempX;
+      if (tempY > yMax) yMax = tempY;
+      if (tempXTicks > xTicks) xTicks = tempXTicks;
     });
 
     const xScale = d3.scaleBand().domain(xMax).range([0, 800]).padding(0.5); // 0px to 300px
