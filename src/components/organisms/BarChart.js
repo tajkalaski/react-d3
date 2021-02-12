@@ -2,10 +2,12 @@ import React from "react";
 import { useRef, useEffect } from "react";
 import styled from "styled-components";
 import Heading from "./../atoms/Heading";
+import expandIcon from "./../../assets/expand.svg";
+import minimizeIcon from "./../../assets/minimize.svg";
+import ButtonIcon from "./../atoms/ButtonIcon";
 import * as d3 from "d3";
 
 const StyledHeading = styled(Heading)`
-  border-bottom: 1px solid #eceded;
   text-align: left;
 `;
 
@@ -17,6 +19,16 @@ const StyledWrapper = styled.div`
   margin: 0 auto;
   border-radius: 5px;
   border: 1px solid #eceded;
+`;
+
+const StyledHeadingWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eceded;
+`;
+const StyledIcon = styled(ButtonIcon)`
+  background-color: white;
 `;
 
 const StyleSVG = styled.svg`
@@ -134,7 +146,10 @@ const BarChart = ({ data, colors }) => {
   return (
     <>
       <StyledWrapper>
-        <StyledHeading>Chart Preview</StyledHeading>
+        <StyledHeadingWrapper>
+          <StyledHeading>Chart Preview</StyledHeading>
+          <ButtonIcon icon={expandIcon}></ButtonIcon>
+        </StyledHeadingWrapper>
         <StyleSVG ref={svgRef}>
           <g className="x-axis"></g>
           <g className="y-axis"></g>

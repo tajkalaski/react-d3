@@ -4,10 +4,12 @@ import styled from "styled-components";
 import Heading from "../atoms/Heading";
 import * as d3 from "d3";
 import { curveCardinal } from "d3";
+import expandIcon from "./../../assets/expand.svg";
+import minimizeIcon from "./../../assets/minimize.svg";
+import ButtonIcon from "./../atoms/ButtonIcon";
 
 const StyledHeading = styled(Heading)`
   text-align: left;
-  border-bottom: 1px solid #eceded;
 `;
 
 const StyledWrapper = styled.div`
@@ -20,6 +22,16 @@ const StyledWrapper = styled.div`
   border: 1px solid #eceded;
 `;
 
+const StyledHeadingWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eceded;
+`;
+const StyledIcon = styled(ButtonIcon)`
+  background-color: white;
+`;
+
 const StyleSVG = styled.svg`
   color: #b9baba;
   width: 800px;
@@ -29,12 +41,17 @@ const StyleSVG = styled.svg`
   box-sizing: content-box;
 `;
 
-const LineChart = ({ data, colors }) => {
+const LineChart = ({ data, colors, show, onShow, onHide, name }) => {
   const svgRef = useRef();
 
   useEffect(() => {
     const svg = d3.select(svgRef.current);
+
+    console.log(show);
+
     d3.select("svg").selectAll("*").remove();
+
+    console.log(svgRef);
 
     let yMax = 0;
     let xTicks = 0;
@@ -140,7 +157,13 @@ const LineChart = ({ data, colors }) => {
   return (
     <>
       <StyledWrapper>
-        <StyledHeading>Chart Preview</StyledHeading>
+        <StyledHeadingWrapper>
+          <StyledHeading>Chart Preview</StyledHeading>
+          <StyledIcon
+            onClick={show ? onHide : onShow}
+            icon={show ? minimizeIcon : expandIcon}
+          />
+        </StyledHeadingWrapper>
         <StyleSVG ref={svgRef}>
           <g className="x-axis"></g>
           <g className="y-axis"></g>
